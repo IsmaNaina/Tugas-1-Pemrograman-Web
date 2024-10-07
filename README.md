@@ -7,47 +7,49 @@
     <title>Kalkulator</title>
 </head>
 <body>
-    <h1>Kalkulator Sederhana</h1>
-    <form>
-   
-        <input type="number" name="a" placeholder="Bilangan a">
-
-        <select name="operator">
-            <option selected dosabled>Pilih Operator</option>
+    <h1>Aplikasi Kalkulator Sederhana</h1>
+    <form method="POST">
+       Masukkan Bilangan Pertama <input type="number" name="nilai1" placeholder="Angka Pertama" required> <br>
+        <select name="operator" required>
             <option value="+">+</option>
             <option value="-">-</option>
             <option value="*">*</option>
             <option value="/">/</option>
-</select>
+        </select><br>
+        Masukkan Bilangan Kedua  <input type="number" name="nilai2" placeholder="Angka Kedua" required> <br>
+        <button type="submit">Hitung</button>
+    </form>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nilai1 = $_POST['nilai1'];
+        $nilai2 = $_POST['nilai2'];
+        $operator = $_POST['operator'];
+        $hasil = 0;
 
-<input type="number" name="b" placeholder="Bilangan b">
-<button  type="button" onclick="location.href = '?clear' ">Clear</button>
-<button type="submit">Hitung</button>
-
-</form>
-
-</body>
-</html>
-
-
-<?php
-    if ($_POST): 
-   $a = (double) $_POST['a'];
-   $b = (double) $_POST['b'];
-   $operator = $_POST['operator'];
-
-   switch ($operator){
-    case '+':
-        $hasil = $a + $b;
-        break;
-        case '-':
-            $hasil = $a - $b;
-            break;
+        switch ($operator) {
+            case '+':
+                $hasil = $nilai1 + $nilai2;
+                break;
+            case '-':
+                $hasil = $nilai1 - $nilai2;
+                break;
             case '*':
-                $hasil = $a * $b;
+                $hasil = $nilai1 * $nilai2;
                 break;
                 case '/':
-                    $hasil = $a / $b;
+                    if ($nilai1 != 0) {
+                        $hasil = $nilai1 / $nilai2;
+                    } else {
+                        echo "Error: Pembagian dengan nol!";
+                    }
                     break;
-                }
-    ?>
+            }
+    
+            if ($operator != '/') {
+                echo "<h2>Hasil Perhitungan: $hasil</h2>";
+            }
+        }
+        ?>
+    </body>
+    </html>
+  
